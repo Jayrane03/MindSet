@@ -2,9 +2,11 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": "./src",
+    "rootDir": ".", // <--- CHANGE THIS (or remove if you're explicit with 'include')
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true
-  }
+  },
+  "include": ["./index.ts", "src/**/*.ts"], // <--- ADJUST THIS
+  "exclude": ["node_modules", "dist"]
 }
