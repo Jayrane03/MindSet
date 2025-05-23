@@ -33,7 +33,7 @@ export const getStudentActivityChartData = asyncHandler(async (req: Request, res
         $sort: { _id: 1 } // Sort by date ascending
       }
     ]);
-
+// Admin Controller.ts
     // Format data for the frontend chart (labels and data for a single dataset)
     const labels = studentsByMonth.map(data => data._id);
     const dataPoints = studentsByMonth.map(data => data.count);
