@@ -2,13 +2,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // ✅ Import CORS
-import connectDB from './config/db';
-import authRoutes from '../src/routes/authRoutes';
-import adminRoutes from './routes/adminRoutes'; 
-import './models/User';     // Ensure User model is loaded and registered
-import './models/Document'; // <-- Import your Document model
-import './models/Message'; 
-import messageRoutes from '../src/routes/messageRoutes'; // <-- Import your message routes
+import connectDB from './src/config/db';
+import authRoutes from './src/routes/authRoutes';
+import adminRoutes from './src/routes/adminRoutes'; 
+import './src/models/User';     // Ensure User model is loaded and registered
+import './src/models/Document'; // <-- Import your Document model
+import './src/models/Message'; 
+import messageRoutes from './src/routes/messageRoutes'; // <-- Import your message routes
 dotenv.config();
 
 const app = express();
