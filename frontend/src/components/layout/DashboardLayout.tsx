@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Book, Home, MessageCircle, Users, LogOut, Menu, X, User } from 'lucide-react';
+import { Book, Home, MessageCircle, Users, LogOut, Menu, X, User, BookOpen } from 'lucide-react';
+import AdminCourses from '../../pages/admin/AdminCourses';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -40,6 +41,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     // Removed the 'Messages' link as requested
     // { name: 'Messages', path: '/admin/messages', icon: <MessageCircle size={20} /> },
     { name: 'Students', path: '/admin/students', icon: <Users size={20} /> },
+    { name: 'Courses', path: '/admin/courses', icon: <BookOpen></BookOpen> },
      // Add a link for detailed analytics if you created a separate component for it
      // { name: 'Analytics', path: '/admin/analytics', icon: <BarChart2 size={20} /> }, // Example with different icon
   ];

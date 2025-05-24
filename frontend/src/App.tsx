@@ -11,6 +11,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminMessages from './pages/admin/Messages';
 import AdminStudents from './pages/admin/Students';
 import { ToastProvider } from './contexts/ToastContext';
+import StudentCourse from './pages/student/StudentCourse';
+import AdminCourses from './pages/admin/AdminCourses';
 
 function App() {
   return (
@@ -29,6 +31,11 @@ function App() {
                 <StudentDashboard />
               </ProtectedRoute>
             } />
+            <Route path="/student/course" element={
+              <ProtectedRoute role="student">
+                <StudentCourse />
+              </ProtectedRoute>
+            } />
             
             {/* Admin Routes */}
             <Route path="/admin" element={
@@ -39,6 +46,11 @@ function App() {
             <Route path="/admin/messages" element={
               <ProtectedRoute role="admin">
                 <AdminMessages />
+              </ProtectedRoute>
+            } />
+              <Route path="/admin/courses" element={
+              <ProtectedRoute role="admin">
+                <AdminCourses />
               </ProtectedRoute>
             } />
             <Route path="/admin/students" element={

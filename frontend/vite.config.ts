@@ -5,5 +5,11 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {}
-  }
+  },
+  server: {
+  proxy: {
+    '/api': 'http://localhost:5000',
+  },
+}
+
 });

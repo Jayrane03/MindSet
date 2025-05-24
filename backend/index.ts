@@ -3,11 +3,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // ✅ Import CORS
 import connectDB from './src/config/db';
+import path from 'path';
 import authRoutes from './src/routes/authRoutes';
 import adminRoutes from './src/routes/adminRoutes'; 
 import './src/models/User';     // Ensure User model is loaded and registered
 import './src/models/Document'; // <-- Import your Document model
 import './src/models/Message'; 
+import courseRoutes from './src/routes/courseRoutes'; // <-- Import your course routes
 import messageRoutes from './src/routes/messageRoutes'; // <-- Import your message routes
 dotenv.config();
 
@@ -25,12 +27,17 @@ app.use(
 connectDB();
 
 // Body parser middleware
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
 
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/messages', messageRoutes);
+app.use("/api/courses", courseRoutes);
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // 
 
 // Test route
 app.get('/', (req, res) => {

@@ -1,29 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext';
 // import type { StudentUser } from '../../types'; // Ensure StudentUser type is correctly defined here
-import { Bot, X, ChevronRight, HelpCircle, ArrowLeft, MessageCircle } from 'lucide-react'; // Added MessageCircle
+import { Bot, X, ChevronRight, HelpCircle, ArrowLeft, MessageCircle, BookOpen } from 'lucide-react'; // Added MessageCircle
 import ChatBot from '../../components/student/ChatBot';
 import StudentMessages from "../student/StudentMessages"; // IMPORT YOUR NEW COMPONENT
-
+import StudentCourse from "./StudentCourse"; // IMPORT YOUR NEW COMPONENT
 const StudentDashboard: React.FC = () => {
   // const { currentUser } = useAuth();
   // We no longer need to assert `currentUser` as `StudentUser` here
   // unless you have other student-specific properties used directly in this file.
   // For `StudentMessages`, it will handle its own `currentUser` checks.
-
-  const [activeTab, setActiveTab] = useState<'articles' | 'messages'>('articles');
+ const [activeTab, setActiveTab] = useState('articles'); 
   const [showChatBot, setShowChatBot] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
 
-  // --- REMOVE THESE STATES, StudentMessages will manage them ---
-  // const [studentMessages, setStudentMessages] = useState<Message[]>([]);
-  // const [isMessagesLoading, setIsMessagesLoading] = useState(false);
-  // const [messagesError, setMessagesError] = useState<string | null>(null);
-  // -----------------------------------------------------------
-
+ const tabs = [
+    {
+      id: 'articles',
+      label: 'AI Articles',
+      icon: null, // No icon for articles
+      onClick: () => {
+        setActiveTab('articles');
+        setSelectedArticle(null); // Reset selected article when going back to articles
+      },
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageCircle size={18} />, // MessageCircle icon for messages
+      onClick: () => {
+        setActiveTab('messages');
+      },
+      // You could add a badge property here if needed, e.g., unreadCount: 5
+    },
+    {
+      id: 'courses',// BookOpen icon for courses
+      label: 'Courses',
+      icon: <BookOpen size={18} />, // Example: add an icon if you have one for courses
+      onClick: () => {
+        setActiveTab('courses');
+      },
+      
+    },
+  ];
   // AI Articles Data (unchanged)
   const aiArticles = [
     // ... your aiArticles data (keep them here as they belong to this dashboard)
@@ -213,40 +235,28 @@ const StudentDashboard: React.FC = () => {
       <div className="mb-6">
         <div className="border-b border-neutral-200">
           <div className="flex space-x-6">
-            <button
-              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-                activeTab === 'articles'
-                  ? 'border-primary-500 text-primary-700'
-                  : 'border-transparent text-neutral-600 hover:text-neutral-900'
-              }`}
-              onClick={() => {
-                setActiveTab('articles');
-                setSelectedArticle(null);
-              }}
-            >
-              AI Articles
-            </button>
-            <button
-              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-                activeTab === 'messages'
-                  ? 'border-primary-500 text-primary-700'
-                  : 'border-transparent text-neutral-600 hover:text-neutral-900'
-              }`}
-              onClick={() => {
-                setActiveTab('messages');
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <MessageCircle size={18} /> {/* Added MessageCircle icon */}
-                Messages
-                {/* Optional: Add a badge for unread messages if you track them */}
-                {/* {unreadCount > 0 && <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{unreadCount}</span>} */}
-              </div>
-            </button>
+           {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+            activeTab === tab.id
+              ? 'border-primary-500 text-primary-700'
+              : 'border-transparent text-neutral-600 hover:text-neutral-900'
+          }`}
+          onClick={tab.onClick}
+        >
+          <div className="flex items-center gap-2">
+            {tab.icon} {/* Render icon if it exists */}
+            {tab.label}
+            {/* Optional: Add a badge based on a tab.badge property if you extend your tab data */}
+            {/* {tab.badge && <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{tab.badge}</span>} */}
+          </div>
+        </button>
+      ))}
           </div>
         </div>
       </div>
-
+        
       {activeTab === 'articles' && (
         <div>
           {selectedArticle === null ? (
@@ -352,6 +362,11 @@ const StudentDashboard: React.FC = () => {
         // RENDER YOUR NEW STUDENTMESSAGES COMPONENT HERE
         <StudentMessages />
       )}
+       {activeTab === 'courses' && (
+        // RENDER YOUR NEW STUDENTMESSAGES COMPONENT HERE
+        <StudentCourse />
+      )}
+
 
       {/* Enhanced ChatBot Positioning */}
       {showChatBot && (
